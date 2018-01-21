@@ -1,0 +1,12 @@
+sudo: false
+language: java
+before_install:
+  - jdk_switcher use oraclejdk8
+script:
+  - mvn verify -B
+after_success:
+  - "[[ ${TRAVIS_PULL_REQUEST} == 'false' ]] && [[ ${TRAVIS_TAG} == '' ]] && mvn deploy -DskipTests --settings etc/deploy-settings.xml"
+  - mvn clean verify coveralls:report -Prun-coverage
+cache:
+  directories:
+    - '$HOME/.m2/repository'
