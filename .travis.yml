@@ -10,6 +10,7 @@ script:
   - docker run -it -v "$HOME/.m2/repository":/root/.m2/repository -v "$PWD":/usr/src/mymaven -w /usr/src/mymaven frekele/maven:3.3.9-jdk8 mvn verify
   - docker run -it -v "$HOME/.m2/repository":/root/.m2/repository -v "$PWD":/usr/src/mymaven -w /usr/src/mymaven frekele/maven:3.5.0-jdk8 mvn verify
 after_success:
+  - sudo /usr/local/maven/bin/mvn clean
   - "[[ ${TRAVIS_PULL_REQUEST} == 'false' ]] && [[ ${TRAVIS_TAG} == '' ]] && mvn deploy -DskipTests --settings etc/deploy-settings.xml"
   - mvn clean verify coveralls:report -Prun-coverage
 cache:
