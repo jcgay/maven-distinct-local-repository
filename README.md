@@ -30,7 +30,11 @@ Use the new [core extensions configuration mechanism](http://takari.io/2015/03/1
 
 ## Usage
 
-Run your build as usual, dependencies will be automatically resolved/stored in distinct folders from your local Maven repository.
+Run your build using property `distinct.local.repository=true`:
+
+    mvn install -Ddistinct.local.repository=true
+
+Dependencies will be automatically resolved/stored in distinct folders from/in your local Maven repository.
 
 # Build status
 

@@ -1,5 +1,6 @@
 package fr.jcgay.maven.extension.mdlr;
 
+import fr.jcgay.maven.extension.mdlr.aether.EnhancedLocalRepositoryManager;
 import org.codehaus.plexus.component.annotations.Component;
 import org.eclipse.aether.RepositorySystemSession;
 import org.eclipse.aether.repository.LocalRepository;
@@ -25,6 +26,9 @@ public class MavenDistinctLocalRepositoryFactory implements LocalRepositoryManag
     @Override
     public LocalRepositoryManager newInstance(RepositorySystemSession session, LocalRepository repository) throws NoLocalRepositoryManagerException {
         if ("".equals(repository.getContentType()) || "default".equals(repository.getContentType())) {
+            if (!"true".equalsIgnoreCase(System.getProperty("distinct.local.repository", "false"))) {
+                return new EnhancedLocalRepositoryManager(repository.getBasedir(), session).setLogger(logger);
+            }
             return new MavenDistinctLocalRepositoryManager(repository.getBasedir(), session).setLogger(logger);
         }
 
