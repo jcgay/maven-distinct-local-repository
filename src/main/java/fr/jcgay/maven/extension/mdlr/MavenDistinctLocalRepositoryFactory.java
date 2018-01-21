@@ -27,8 +27,12 @@ public class MavenDistinctLocalRepositoryFactory implements LocalRepositoryManag
     public LocalRepositoryManager newInstance(RepositorySystemSession session, LocalRepository repository) throws NoLocalRepositoryManagerException {
         if ("".equals(repository.getContentType()) || "default".equals(repository.getContentType())) {
             if (!"true".equalsIgnoreCase(System.getProperty("distinct.local.repository", "false"))) {
+                logger.debug("Use default local repository manager.");
                 return new EnhancedLocalRepositoryManager(repository.getBasedir(), session).setLogger(logger);
             }
+            logger.debug("Use distinct local repository manager.");
+            logger.debug("SNAPSHOTs will be stored in " + repository.getBasedir() + "/snapshots");
+            logger.debug("RELEASEs will be stored in " + repository.getBasedir() + "/releases");
             return new MavenDistinctLocalRepositoryManager(repository.getBasedir(), session).setLogger(logger);
         }
 
