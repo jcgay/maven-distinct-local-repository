@@ -5,14 +5,14 @@ services:
 before_install:
   - jdk_switcher use oraclejdk8
 script:
-  - docker run -it -v "$HOME/.m2/repository":/root/.m2/repository -v "$PWD":/usr/src/mymaven -w /usr/src/mymaven maven:3-jdk-8 mvn verify
-  - docker run -it -v "$HOME/.m2/repository":/root/.m2/repository -v "$PWD":/usr/src/mymaven -w /usr/src/mymaven frekele/maven:3.3.3-jdk8 mvn verify
-  - docker run -it -v "$HOME/.m2/repository":/root/.m2/repository -v "$PWD":/usr/src/mymaven -w /usr/src/mymaven frekele/maven:3.3.9-jdk8 mvn verify
-  - docker run -it -v "$HOME/.m2/repository":/root/.m2/repository -v "$PWD":/usr/src/mymaven -w /usr/src/mymaven frekele/maven:3.5.0-jdk8 mvn verify
+  - docker run -it -v "$HOME/.m2/repository":/root/.m2/repository/releases -v "$PWD":/usr/src/mymaven -w /usr/src/mymaven maven:3-jdk-8 mvn verify -Ddistinct.local.repository=true
+  - docker run -it -v "$HOME/.m2/repository":/root/.m2/repository/releases -v "$PWD":/usr/src/mymaven -w /usr/src/mymaven frekele/maven:3.3.3-jdk8 mvn verify -Ddistinct.local.repository=true
+  - docker run -it -v "$HOME/.m2/repository":/root/.m2/repository/releases -v "$PWD":/usr/src/mymaven -w /usr/src/mymaven frekele/maven:3.3.9-jdk8 mvn verify -Ddistinct.local.repository=true
+  - docker run -it -v "$HOME/.m2/repository":/root/.m2/repository/releases -v "$PWD":/usr/src/mymaven -w /usr/src/mymaven frekele/maven:3.5.0-jdk8 mvn verify -Ddistinct.local.repository=true
 after_success:
   - sudo /usr/local/maven/bin/mvn clean
-  - "[[ ${TRAVIS_PULL_REQUEST} == 'false' ]] && [[ ${TRAVIS_TAG} == '' ]] && mvn deploy -DskipTests --settings etc/deploy-settings.xml"
-  - mvn clean verify coveralls:report -Prun-coverage
+  - "[[ ${TRAVIS_PULL_REQUEST} == 'false' ]] && [[ ${TRAVIS_TAG} == '' ]] && mvn deploy -DskipTests --settings etc/deploy-settings.xml -Ddistinct.local.repository=true"
+  - mvn clean verify coveralls:report -Prun-coverage -Ddistinct.local.repository=true
 cache:
   directories:
-    - '$HOME/.m2/repository'
+    - '$HOME/.m2/repository/releases'
