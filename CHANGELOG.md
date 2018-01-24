@@ -1,3 +1,8 @@
+# 1.2
+***
+
+- Override SimpleLocalRepositoryManager#getPathForArtifact ([28ef3d6](http://github.com/jcgay/maven-distinct-local-repository/commit/28ef3d676394f79874d959d2d69ef73dfdfe9642))
+
 # 1.1
 ***
 

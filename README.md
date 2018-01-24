@@ -11,7 +11,7 @@ It is handy to manage a cache only for released artifacts (on your CI server...)
  
 ## Installation
 
-Get [maven-distinct-local-repository](https://dl.bintray.com/jcgay/maven/fr/jcgay/maven/extension/maven-distinct-local-repository/1.1/maven-distinct-local-repository-1.1.jar) and copy it in `%M2_HOME%/lib/ext` folder (where `%M2_HOME` targets your local Maven installation).
+Get [maven-distinct-local-repository](https://dl.bintray.com/jcgay/maven/fr/jcgay/maven/extension/maven-distinct-local-repository/1.2/maven-distinct-local-repository-1.2.jar) and copy it in `%M2_HOME%/lib/ext` folder (where `%M2_HOME` targets your local Maven installation).
 
 *or*
 
@@ -23,7 +23,7 @@ Use the new [core extensions configuration mechanism](http://takari.io/2015/03/1
     <extension>
       <groupId>fr.jcgay.maven.extension</groupId>
       <artifactId>maven-distinct-local-repository</artifactId>
-      <version>1.1</version>
+      <version>1.2</version>
     </extension>
 </extensions>
 ```
