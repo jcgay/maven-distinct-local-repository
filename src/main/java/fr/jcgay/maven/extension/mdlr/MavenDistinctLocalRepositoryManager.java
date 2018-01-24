@@ -19,16 +19,6 @@ public class MavenDistinctLocalRepositoryManager extends EnhancedLocalRepository
     }
 
     @Override
-    public String getPathForLocalArtifact(Artifact artifact) {
-        return getPrefixedPath(artifact, super.getPathForLocalArtifact(artifact));
-    }
-
-    @Override
-    public String getPathForRemoteArtifact(Artifact artifact, RemoteRepository repository, String context) {
-        return getPrefixedPath(artifact, super.getPathForRemoteArtifact(artifact, repository, context));
-    }
-
-    @Override
     public String getPathForLocalMetadata(Metadata metadata) {
         return getPrefixedPath(metadata, super.getPathForLocalMetadata(metadata));
     }
@@ -36,6 +26,11 @@ public class MavenDistinctLocalRepositoryManager extends EnhancedLocalRepository
     @Override
     public String getPathForRemoteMetadata(Metadata metadata, RemoteRepository repository, String context) {
         return getPrefixedPath(metadata, super.getPathForRemoteMetadata(metadata, repository, context));
+    }
+
+    @Override
+    protected String getPathForArtifact(Artifact artifact, boolean local) {
+        return getPrefixedPath(artifact, super.getPathForArtifact(artifact, local));
     }
 
     private static String getPrefixedPath(Artifact artifact, String result) {

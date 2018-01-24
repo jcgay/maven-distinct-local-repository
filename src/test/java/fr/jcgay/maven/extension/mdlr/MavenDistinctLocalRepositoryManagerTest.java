@@ -1,5 +1,14 @@
 package fr.jcgay.maven.extension.mdlr;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.eclipse.aether.RepositorySystemSession;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.metadata.Metadata;
@@ -8,16 +17,6 @@ import org.eclipse.aether.repository.RemoteRepositories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 class MavenDistinctLocalRepositoryManagerTest {
 
@@ -37,25 +36,33 @@ class MavenDistinctLocalRepositoryManagerTest {
    @Test
    void snapshots_are_resolved_in_a_snapshots_directory() {
       assertThat(manager.getPathForLocalArtifact(snapshotArtifact("a", "b", "1.0-SNAPSHOT")))
-            .startsWith("snapshots/");
+            .startsWith("snapshots/a/b");
       assertThat(manager.getPathForRemoteArtifact(snapshotArtifact("a", "b", "1.0-SNAPSHOT"), RemoteRepositories.any(), ""))
-            .startsWith("snapshots/");
+            .startsWith("snapshots/a/b");
       assertThat(manager.getPathForLocalMetadata(snapshotMetadata("a", "b", "1.0-SNAPSHOT")))
-            .startsWith("snapshots/");
+            .startsWith("snapshots/a/b");
       assertThat(manager.getPathForRemoteMetadata(snapshotMetadata("a", "b", "1.0-SNAPSHOT"), RemoteRepositories.any(), ""))
-            .startsWith("snapshots/");
+            .startsWith("snapshots/a/b");
+      assertThat(manager.getPathForArtifact(snapshotArtifact("a", "b", "1.0-SNAPSHOT"), true))
+            .startsWith("snapshots/a/b");
+      assertThat(manager.getPathForArtifact(snapshotArtifact("a", "b", "1.0-SNAPSHOT"), false))
+            .startsWith("snapshots/a/b");
    }
 
    @Test
    void releases_are_resolved_in_a_releases_directory() {
       assertThat(manager.getPathForLocalArtifact(releaseArtifact("a", "b", "1.0-SNAPSHOT")))
-            .startsWith("releases/");
+            .startsWith("releases/a/b");
       assertThat(manager.getPathForRemoteArtifact(releaseArtifact("a", "b", "1.0-SNAPSHOT"), RemoteRepositories.any(), ""))
-            .startsWith("releases/");
+            .startsWith("releases/a/b");
       assertThat(manager.getPathForLocalMetadata(releaseMetadata("a", "b", "1.0-SNAPSHOT")))
-            .startsWith("releases/");
+            .startsWith("releases/a/b");
       assertThat(manager.getPathForRemoteMetadata(releaseMetadata("a", "b", "1.0-SNAPSHOT"), RemoteRepositories.any(), ""))
-            .startsWith("releases/");
+            .startsWith("releases/a/b");
+      assertThat(manager.getPathForArtifact(releaseArtifact("a", "b", "1.0-SNAPSHOT"), true))
+            .startsWith("releases/a/b");
+      assertThat(manager.getPathForArtifact(releaseArtifact("a", "b", "1.0-SNAPSHOT"), false))
+            .startsWith("releases/a/b");
    }
 
     @Test

@@ -19,6 +19,11 @@ package fr.jcgay.maven.extension.mdlr.aether;
  * under the License.
  */
 
+import static java.util.Objects.requireNonNull;
+
+import java.io.File;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import org.eclipse.aether.RepositorySystemSession;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.metadata.Metadata;
@@ -32,12 +37,6 @@ import org.eclipse.aether.repository.LocalRepository;
 import org.eclipse.aether.repository.LocalRepositoryManager;
 import org.eclipse.aether.repository.RemoteRepository;
 import org.eclipse.aether.spi.log.Logger;
-
-import java.io.File;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * A local repository manager that realizes the classical Maven 2.0 local repository.
@@ -74,7 +73,7 @@ class SimpleLocalRepositoryManager
         return repository;
     }
 
-    String getPathForArtifact( Artifact artifact, boolean local )
+    protected String getPathForArtifact( Artifact artifact, boolean local )
     {
         StringBuilder path = new StringBuilder( 128 );
 
